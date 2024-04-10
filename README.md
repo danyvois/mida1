@@ -4,7 +4,8 @@
 
 # Model Identification and Data Analysis - Part 1
 
-Lecture notes of the [Model Identification and Data Analysis - Part 1 (051588)](https://www11.ceda.polimi.it/schedaincarico/schedaincarico/controller/scheda_pubblica/SchedaPublic.do?&evn_default=evento&c_classe=765793&polij_device_category=DESKTOP&__pj0=0&__pj1=c4cfdb62e79df118344594f5fd1ca434) course at Politecnico di Milano, A.Y. 2021-2022.
+Lecture notes of the MIDA 1 course at Politecnico di Milano, A.Y. 2023-2024.
+You can find the .pdf in the release section.
 
 ## Project structure
 
