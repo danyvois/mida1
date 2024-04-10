@@ -17,10 +17,27 @@ If $\tau =0$ we have
 \[
 	\gamma _{y}(0)=\E[(y(t)-m_{y})^2 ]=\frac{1}{2\pi }\int_{-\pi }^{\pi } \Gamma _{y}(\omega )d\omega 
 \]
+So the variance is the area under the curve of the spectrum divided by the constant $2\pi$.
 \end{rem}
 \textbf{Remark.}
-There is bijective relationship between the spectrum and the covariance function. Namely to describe $y(t)$ one could use $m_{y}$ and $\gamma _{y}(\tau )$ or $m_{y}$ and $\Gamma _{y}(\omega)$. It gives the same information from a different perspective, but it's useful to understand some properties.
+There is bijective relationship between the spectrum and the covariance function. Namely to describe $y(t)$ one could use $m_{y}$ and $\gamma _{y}(\tau )$ or $m_{y}$ and $\Gamma _{y}(\omega)$. It gives the same information from a different perspective, but it is useful to understand some properties.
 
+\begin{exa}
+Let us consider the generic MA($1$) process defined by $y(t)=e(t)+c \cdot e(t-1)$, with $c \in \RR$, $e(t)\sim \WN(0,1)$.\\
+We have just calculated the spectrum:
+$$
+\Gamma_y(\omega)=1+c^{2}+2 c \cdot \cos(\omega).
+$$
+$\gamma_{y}(0)$ based on $\Gamma_y(\omega)$:
+\begin{align*}
+	\gamma_{y}(0)&=\frac{1}{2\pi}\int_{-\pi}^\pi\Gamma_y(\omega) d\omega=\frac{1}{2\pi}\int_{-\pi}^\pi\left(1+c^{2}+2 c \cdot \cos (\omega)\right) d\omega\\
+	&=\frac{1}{2\pi}\left\{\left[\left(1+c^2\right)\cdot\omega\right]_{-\pi}^\pi + 2c\cdot\left[\sin(\omega)\right]_{-\pi}^\pi\right\}\\
+	&=\frac{1}{2\pi}\left\{\left(1+c^2\right)\cdot\pi - \left(1+c^2\right)\cdot(-\pi) + 2c\cdot(0-0)\right\}\\
+    &=\frac{1}{2\pi}\left(1+c^2\right)\cdot 2\pi = 1+c^2
+\end{align*}
+which is the result already known.
+\end{exa}
+\newpage
 \subsection{An alternative interpretation of the spectral density}
 Suppose that an \gls{ssp} $y(t)$ is filtered through an (ideal) pass-band filter:
 \fg{0.7}{kinchine-wiener}
@@ -63,7 +80,7 @@ The \gls{wn} spectral density is constant, i.e. \gls{wn} energy is \emph{equally
 \FloatBarrier
 
 \begin{exa}
-Consider the AR($1$) process $y(t)=ay(t-1)+e(t)$.
+Consider the AR($1$) process $y(t)=ay(t-1)+e(t)$, $e(t)\sim \WN(0,\lambda^2)$.
 \begin{itemize}
 	\item if $a>0$ the sign tends to be maintained;
 	\item if $a<0$ the sign tends to change.
@@ -83,8 +100,9 @@ If $a>0$ energy is concentrated at low frequencies
 If $a<0$ energy is concentrated at larger frequencies
 \fg[Left: signal. Right: spectrum.]{0.8}{ar-1-frequency-fig2}
 
+\section{Canonical representation}
 \begin{exa}
-Consider the ARMA process $y(t)=\frac{C(z)}{A(z)}e(t)$
+Consider the ARMA process $y(t)=\frac{C(z)}{A(z)}e(t)$, $e(t)\sim \WN(0,\lambda^2)$.
 \[
 	\Gamma _{y}(\omega )=\left|\frac{C(e^{j\omega})}{A(e^{j\omega})}\right|^2 \cdot\lambda^2 =\frac{C(e^{j\omega})}{A(e^{j\omega} )} \cdot \frac{C(e^{-j\omega})}{A(e^{-j\omega} )}\cdot\lambda^2 
 \]
@@ -103,7 +121,7 @@ Indeed we have the following result:
 	i.e. $y(t)$ is an ARMA process.
 \end{thm}
 
-However, the \emph{choice} of $\xi(t)$ and of $W(z))$ \emph{is not unique}.
+However, the \emph{choice} of $\xi(t)$ and of $W(z)$ \emph{is not unique}.
 The \emph{same} process $y(t)$ can be generated according to an infinite number of different ARMA models.
 
 Let $y(t)=W(z)\xi(t)$, where $\xi(t)$ is a $\WN\sim(\mu,\lambda^2)$. Our goal is show how to construct $\tilde{W}(z)$ and $\tilde{\xi}(t)$ such that $\tilde{W}(z)\neq W(z)$ and $\tilde{\xi}(t)\neq \xi(t)$, but $y(t)=\tilde W(z)\tilde\xi(t)$. Let us consider four different cases:
@@ -116,7 +134,7 @@ Let $y(t)=W(z)\xi(t)$, where $\xi(t)$ is a $\WN\sim(\mu,\lambda^2)$. Our goal is
 	where they are still both respectively a rational transfer function and a \gls{wn}, indeed:
 	\begin{align*}
 		\E[\tilde{\xi}(t)]&=\E[\alpha \xi(t)]=\alpha \E[\xi(t)]=\alpha \mu\\
-		\gamma_{\tilde{\xi}}(\tau)&=\E[(\alpha\xi(t)-\alpha\mu)(\alpha \xi(t-\tau)-\alpha \mu)]=\alpha^2 \E[(\xi(t)-\mu)( \xi(t-\tau)- \mu)] = \alpha^2 \gamma_{\xi}(\tau)
+		\gamma_{\tilde{\xi}}(\tau)&=\E[(\alpha\xi(t)-\alpha\mu)(\alpha \xi(t-\tau)-\alpha \mu)]=\alpha^2 \E[(\xi(t)-\mu)( \xi(t-\tau)- \mu)] = \alpha^2\lambda^2
 	\end{align*}
 
 	\item 
@@ -127,7 +145,7 @@ Let $y(t)=W(z)\xi(t)$, where $\xi(t)$ is a $\WN\sim(\mu,\lambda^2)$. Our goal is
 	where they are still both respectively a rational transfer function and a \gls{wn}, indeed:
 	\begin{align*}
 		\E[\tilde{\xi}(t)]&=\E[\xi(t-n)]=\mu \\
-		\gamma_{\tilde{\xi}}(\tau)&=\E[(\xi(t-n)-\mu)(\xi(t-n-\tau)-\mu)]=\gamma_{\xi}(\tau)
+		\gamma_{\tilde{\xi}}(\tau)&=\E[(\xi(t-n)-\mu)(\xi(t-n-\tau)-\mu)]=\lambda^2
 	\end{align*}
 
 	\item 

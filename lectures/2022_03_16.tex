@@ -1,12 +1,12 @@
 %!TEX root = ../main.tex
 
-What we did \eqref{eq:reconstruction-noise-from-data} is indeed possible (meaning we can reconstruct $e(t)$ from $y(t)$) thanks to the further assumptions we made at page \pageref{assumptions-prediction-theory}. In fact, this means that $W(z)^{-1}=\frac{A(z)}{C(z)}$ is asymptotically stable too.
+What we did \eqref{eq:reconstruction-noise-from-data} is indeed possible (meaning we can reconstruct $e(t)$ from $y(t)$) thanks to the further assumptions we made on page \pageref{assumptions-prediction-theory}. In fact, this means that $W(z)^{-1}=\frac{A(z)}{C(z)}$, which is called \textbf{whitening filter}, is asymptotically stable too.
 
 From the point of view of transfer functions we have that:
 \[
 	\hat y (t+k\mid t) = \frac{F(z)}{A(z)}e(t) =\frac{F(z)}{\cancel{A(z)}}\cdot\frac{\cancel{A(z)}}{C(z)}y(t) =\frac{F(z)}{C(z)}y(t) \implies \boxed{\hat y (t+k\mid t) = \frac{F(z)}{C(z)}y(t)}
 \]
-meaning that the optimal predictor from output is obtained as the output of a digital filter $F(z)/C(z)$ fed by $y(t)$ up to time $t$.
+meaning that the optimal predictor from output is obtained as the output of a digital filter $\frac{F(z)}{C(z)}$ fed by $y(t)$ up to time $t$.
 
 \textbf{Remark.}
 The correct expression of the linear predictor can \emph{only} be obtained by using the canonical representation, otherwise there may be zeros of $C(z)$ which becomes unstable poles when reconstructing $e(t)$.
@@ -81,7 +81,7 @@ If instead we try to get something using values from the past we get a term whic
 \end{rem}
 
 \textbf{Remark.}
-In the assumptions we made at page \pageref{assumptions-prediction-theory} the really fundamental ones are that all zeros and poles are such that $|z|<1$, without this we cannot proceed; the other requests ($C(z),A(z)$ monic, coprime, null relative degree) allows for simplified formulas.
+In the assumptions we made on page \pageref{assumptions-prediction-theory} the really fundamental ones are that all zeros and poles are such that $|z|<1$, without this we cannot proceed; the other requests ($C(z),A(z)$ monic, coprime, null relative degree) allow for simplified formulas.
 
 \textbf{Remark.}
 Given the construction of $\hat y(t+k\mid t)$, since it's the output of an asymptotically stable filter ($F/C$) fed by $y(t)$ (which is a \gls{ssp}), also $\hat y(t+k\mid t)$ is a \gls{ssp}. The statistical properties of $\hat y(t+k\mid t)$ don't depend on $t$, thus
@@ -103,7 +103,32 @@ so usually we use the optimal predictor, but instead of considering the steady-s
 \[
 	\boxed{\hat y(k\mid 0) = \hat y(k-1\mid -1) = \hat y(k-2\mid -2) = \cdots = 0 = y(0) = y(-1) = y(-2) = \cdots}
 \]
-Thanks to the asymptotic stability of $F(z)/C(z)$ the effect of the conventional initialization rapidly vanishes, and is negligible provided that $t$ is large enough.
+Thanks to the asymptotic stability of $\frac{F(z)}{C(z)}$ the effect of the conventional initialization rapidly vanishes, and is negligible provided that $t$ is large enough.
+
+\subsection{Analysis of optimal predictors}
+
+The quality of the prediction get worse with increasing $k$.
+\begin{align*}
+    &\varepsilon(t+k\mid t)=y(t+k)-\hat{y}(t+k\mid t)=E(z)e(t+k) &\text{is SSP (MA($k-1$))}\\
+    &\varepsilon(t\mid t-k)=E(z)e(t)=e_0e(t)+e_1e(t-1)+\ldots+e_{k-1}e(t-k+1)\\
+    &\E[\varepsilon(t+k\mid t)^2]=\E[\varepsilon(t\mid t-k)^2]=(e_0^2+e_1^2+\ldots)\cdot\lambda^2 &e(t)\sim \WN(0,\lambda^2)
+\end{align*}
+The best we can do is to obtain an error that is a white noise and if it happens his variance is minimal.
+
+The variation of the prediction error grows up to the asymptotic value equal to $\mathrm{Var}[y(t)]$.
+
+In fact, if we select the trivial predictor $\hat y(t+k\mid t)=\E[y(t)]=m_y$:
+\begin{align*}
+    &\varepsilon(t+k\mid t)=y(t+k)-\hat y(t+k\mid t)=y(t+k)-m_y\\
+    &\E[\varepsilon(t+k\mid t)^2]=\E[(y(t+k)-m_y)^2]=\E[(y(t)-m_y)^2]=\mathrm{Var} [y(t)]\quad\forall k
+\end{align*}
+
+So in the end
+\[
+\boxed{\mathrm{Var}[e(t)]\leq\mathrm{Var}[\varepsilon(t+k\mid t)]<\mathrm{Var}[y(t)]}
+\]
+
+\fg{0.6}{var_pred_err}
 
 \section{Optimal prediction for non-zero mean ARMA processes}
 \[
@@ -111,7 +136,7 @@ Thanks to the asymptotic stability of $F(z)/C(z)$ the effect of the conventional
 \]
 Same assumptions as in page \pageref{assumptions-prediction-theory}. How do we compute $\hat y(t+k\mid t)$?
 \[
-	\E[e(t)] = \mu \implies \E[y(t)]=\frac{C(1)}{A(1)}\cdot\mu=m_{y} \quad \forall t
+	\E[e(t)] = \mu \implies \E[y(t)]=W(1)\cdot\mu=\frac{C(1)}{A(1)}\cdot\mu=m_{y} \quad \forall t
 \]
 We construct the unbiased processes:
 \[

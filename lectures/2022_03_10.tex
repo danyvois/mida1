@@ -32,7 +32,7 @@ We first need to have the same degree and positive powers, which we can achieved
 \begin{equation*}
 	y(t)=
 	\frac{2+5z^{-1}+2z^{-2}}{z^2+\frac{5}{6}z+\frac{1}{6}}\cdot e(t)
-	=\frac{2+5z^{-1}+2z^{-2}}{z^2+\frac{5}{6}z+\frac{1}{6}}\cdot\frac{z^2}{2}\cdot\underbrace{\frac{2}{z^2}}_{\eta(t)}\cdot e(t)
+	=\frac{2+5z^{-1}+2z^{-2}}{z^2+\frac{5}{6}z+\frac{1}{6}}\cdot\frac{z^2}{2}\cdot\underbrace{\frac{2}{z^2}\cdot e(t)}_{\eta(t)}
 	=\frac{z^2+\frac{5}{2}z+1}{z^2+\frac{5}{6}z+\frac{1}{6}}\cdot \eta(t)
 \end{equation*}
 where $\eta(t)=2z^{-2}e(t)=2e(t-2)\sim \WN(2\cdot0,4\cdot 1)\sim \WN(0,4)$.\\
@@ -101,10 +101,16 @@ We want a predictor which is good with respect to $S$ (of the specific experimen
 	\hat{y}(t + k \mid t)\approx y(t+k)
 \]
 
+\begin{defn}[Prediction error]
+    \[
+    \varepsilon(t+k\mid t)=y(t+k)-\hat{y}(t+k\mid t)
+    \]
+\end{defn}
+
 \begin{defn}[\Gls{mse} of prediction]
-	\[
-		\E[(y(t+k,s)-\hat{y}(t+k\mid t,s))^2]
-	\]
+\[
+		\E[(y(t+k)-\hat{y}(t+k\mid t))^2=\E[\varepsilon(t+k\mid t)^2]
+\]
 \end{defn}
 
 \textbf{Goal:} choose $\alpha_0,\ldots,\alpha_i,\ldots$ in order to minimize the \gls{mse}.

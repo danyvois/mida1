@@ -27,7 +27,7 @@ By AR process we mean the solution obtained by taking the initial condition $\bo
 \begin{exa}
 Let us consider the AR($1$) process defined by $y(t)=a y(t-1)+e(t)$, where $e(t) \sim \WN(\mu, \lambda^{2})$
 
-What is the steady state solution?
+What is the steady-state solution?
 \begin{align*}
 	y(t) & =a y(t-1)+e(t) & (y(t-1)=a y(t-2)+e(t-1)) \\
 	& =e(t)+a e(t-1)+a^{2} y(t-2) & (y(t-2)=a y(t-3)+e(t-2)) \\
@@ -75,6 +75,8 @@ Terminology:
 An ARMA process is well defined and stationary under some conditions which are too complicated to verify directly.
 We'll see how to solve this problem after introducing the operatorial representation of ARMA processes.
 
+\newpage
+
 \subsection{Operatorial representation of ARMA processes}
 
 \begin{defn}[Backward and forward shift operators]
@@ -113,10 +115,10 @@ We can rewrite an ARMA process as follows:
 
 Even more compact notation:
 \[
-	\boxed{y(t)=\frac{\left(c_{0}+c_{1} z^{-1}+\cdots+c_{n} z^{-n}\right)}{\left(1-a_{1} z^{-1}-a_{2} z^{-2}-\cdots-a_{m} z^{-m}\right)} e(t)=\frac{C(z)}{A(z)} e(t)}
+	\boxed{y(t)=\frac{\left(c_{0}+c_{1} z^{-1}+\cdots+c_{n} z^{-n}\right)}{\left(1-a_{1} z^{-1}-a_{2} z^{-2}-\cdots-a_{m} z^{-m}\right)} e(t)=\frac{C(z)}{A(z)} e(t)=W(z)e(t)}
 \]
 where:
 \[
 	\boxed{C(z)=\left(c_{0}+c_{1} z^{-1}+\cdots+c_{n} z^{-n}\right)} \quad \boxed{A(z)=\left(1-a_{1} z^{-1}-a_{2} z^{-2}-\cdots-a_{m} z^{-m}\right)}
 \]
-$\frac{C(z)}{A(z)}$ is called \textbf{discrete time transfer function} and it simply says that $y(t)$ is generated as the steady-state output of a linear operator that receive as input $e(t)$.
+$W(z)$ is called \textbf{discrete time transfer function} and it simply says that $y(t)$ is generated as the steady-state output of a linear operator that receive as input $e(t)$.

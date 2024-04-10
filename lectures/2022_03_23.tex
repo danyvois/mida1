@@ -100,10 +100,8 @@ The idea is that, when dealing with a real system, the values of $u$ and $y$ fro
 	\end{tikzpicture}
 	\caption{The \gls{pem} identification scheme.}
 \end{figure}
-% \FloatBarrier
 
 \begin{center}
-
 \begin{tabular}{ccccc}
 \toprule 
  $t$ & $u$ & $y$ & $ \hat{y}$ & $ \varepsilon $ \\
@@ -115,8 +113,8 @@ $n$ & $ u(n)$ & $ y(n)$ & $ \hat{y}(n\mid n-1)$ & $ \varepsilon (n\mid n-1,\thet
  \bottomrule
 \end{tabular}
 \end{center}
-
-All the values $ \hat{y} ,\ \varepsilon $ depend on the chosen $ \theta $. By inspecting the value of $ \varepsilon $, $ \theta $ can be tuned to make the prediction error as small as possible through a minimization process.
+\vspace{0.5cm}
+All values $ \hat{y} ,\ \varepsilon $ depend on the chosen $ \theta $. By inspecting the value of $ \varepsilon $, $ \theta $ can be tuned to make the prediction error as small as possible through a minimization process.
 
 \textbf{We want to choose $\hat{\theta}_{N}$ that minimizes the prediction error.}
 
@@ -216,7 +214,7 @@ i.e. a system of linear equations whose solutions are all and only minimizers of
 
 By substitution:
 \begin{align*}
-\frac{d}{d\theta } J_{N}(\theta) & =\frac{d}{d\theta }[\frac{1}{N}\sum _{t=1}^{N}\left(y(t) -\theta \transpose \varphi (t)\right)^{2}] & \text{(linearity)}\\
+\frac{d}{d\theta } J_{N}(\theta) & =\frac{d}{d\theta }\left[\frac{1}{N}\sum _{t=1}^{N}\left(y(t) -\theta \transpose \varphi (t)\right)^{2}\right] & \text{(linearity)}\\
  & =\frac{1}{N}\sum _{t=1}^{N}\frac{d}{d\theta }\left(y(t) -\theta \transpose \varphi (t)\right)^{2} & \\
  & =\frac{1}{N}\sum _{t=1}^{N} 2\left(y(t) -\theta \transpose \varphi (t)\right)\frac{d}{d\theta }\left(y(t) -\theta \transpose \varphi (t)\right) & \frac{d}{d\theta } y(t) =\begin{bmatrix}
 0\\

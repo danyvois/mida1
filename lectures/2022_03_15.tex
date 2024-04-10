@@ -118,6 +118,17 @@ The optimal predictor from noise is given by the predictable part of $y(t + k)$:
 \]
 $\hat{y}(t+k \mid t)$ is the steady-state output of a suitable linear filter fed by $e(t)$.
 
+The prediction error is given by the unpredictable part:
+\[
+\boxed{\varepsilon(t+k\mid t) = E(z)e(t+k)}
+\]
+
+Infact,
+\begin{align*}
+    \varepsilon(t+k\mid t)&=y(t+k)-\hat{y}(t+k\mid t)\\
+    &=E(z)e(t+k)+\cancel{\frac{F(z)}{A(z)}e(t)}-\cancel{\frac{F(z)}{A(z)}e(t)}
+\end{align*}
+
 \textbf{Unfortunately this result is completely useless in practice.}
 
 In order to actually compute the predicted value for the output variable based on the above expression for $\hat{y}(t+k \mid t)$, past values of the noise process $e(t),e(t_1),e(t_2),\ldots$ should be accessible, but the output $y(t)$ is the only information in reality which we can access.

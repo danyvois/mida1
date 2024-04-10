@@ -36,7 +36,7 @@ The first part is deterministically known, and hence can be trivially predicted.
 	&=\frac{B(z)}{A(z)} u(t+k-d)+\frac{F(z)}{C(z)} z(t) \\
 	& =\frac{B(z)}{A(z)} u(t+k-d)+\frac{F(z)}{C(z)}\left(y(t)-\frac{B(z)}{A(z)} u(t-d)\right) \\
 	& =\frac{B(z)}{A(z)} u(t+k-d)+\frac{F(z)}{C(z)}\left(y(t)-\frac{B(z)}{A(z)} z^{-k}u(t+k-d)\right) \\
-	&=\frac{B(z)}{C(z)} \cdot\Bigg(\underbrace{\frac{C(z)}{A(z)}-\frac{z^{-k} F(z)}{A(z)}}_{E(z)}\Bigg) u(t+k-d)+\frac{F(z)}{C(z)} y(t)
+	&=\frac{B(z)}{C(z)} \cdot\Bigg(\underbrace{\frac{C(z)}{A(z)}-\frac{F(z)}{A(z)}z^{-k}}_{E(z)}\Bigg) u(t+k-d)+\frac{F(z)}{C(z)} y(t)
 \end{align*}
 $$
 	\boxed{\hat{y}(t+k \mid t) =\frac{B(z) E(z)}{C(z)} u(t+k-d)+\frac{F(z)}{C(z)} y(t)}
@@ -79,7 +79,7 @@ First we select a \textbf{parametric model class} $\Mc(\theta)$, where $\theta$ 
 
 For example the family of ARMAX models whose coefficients are polynomials is:
 $$
-	\Mc(\theta)=\left\{y(t)=\frac{B(z, \theta)}{A(z, \theta)} u(t-d)+\frac{C(z, \theta)}{A(z, \theta)} e(t), \quad e(t) \sim \WN(0, \lambda^{2}), \theta\in\Theta\right\}
+	\Mc(\theta)=\left\{y(t)=\frac{B(z, \theta)}{A(z, \theta)} u(t-d)+\frac{C(z, \theta)}{A(z, \theta)} e(t), \quad e(t) \sim \WN(0, \lambda^{2}), \quad \theta\in\Theta\right\}
 $$
 where:
 \begin{align*}
@@ -136,14 +136,3 @@ The idea of the \gls{pem} is that we move \textbf{from stochastic models to pred
 \[
 	\Mc(\theta) \to \hat{\Mc}(\theta)
 \]
-For example this is an ARMAX in $\Mc(\theta)$ for a given value of $\theta$:
-\begin{align*}
-	\Mc(\theta)&:\quad y(t)=\frac{B(z, \theta)}{A(z, \theta)} u(t-d)+\frac{C(z, \theta)}{A(z, \theta)} e(t)\\
-	&\qquad\downarrow\\
-	\hat{\Mc}(\theta)&: \quad \hat{y}(t \mid t-1) =\frac{B(z,\theta) E(z,\theta)}{C(z,\theta)} u(t-d)+\frac{F(z,\theta)}{C(z,\theta)} y(t-1) \qquad \text{one step predictor}
-\end{align*}
-
-% $$y(t)=\underbrace{\frac{B(z)}{A(z)} u(t+k-d)}_{\substack{\text{This part of the process}\\ 
-% 		\text{is deterministically}\\
-% 		\text{known, and hence can}\\
-% 		\text{be trivially predicted}}} +z(t+k)$$

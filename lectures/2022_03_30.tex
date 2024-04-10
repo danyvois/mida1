@@ -9,7 +9,7 @@ Our model is not just a model, but the true system through which $ y(t)$ is gene
 
 The expression of the asymptotic cost function is:
 \begin{align*}
-	\bar{J}(\theta) & =\E\left[ \varepsilon (t,\theta)^{2}\right] \\
+	\bar{J}(\theta) & =\E\left[ \varepsilon (t\mid t-1,\theta)^{2}\right] \\
 	& = \E\left[(y(t) -\hat{y}(t\mid t-1,\theta))^{2}\right] \\
 	& = \E\left[\left(y(t) \pm \hat{y}\left(t\mid t-1,\theta _{0}\right) -\hat{y}(t\mid t-1,\theta)\right)^{2}\right] \\
 	& = \E\bigg[(\underbrace{
@@ -24,7 +24,7 @@ The expression of the asymptotic cost function is:
 			\substack{\text{$\hat{y}$ linear functions} \\ \text{of $y(t-1),y(t-2),\ldots$} \\ \text{uncorrelated with $e_{0}(t)$}}
 		}
 		))^{2}\bigg] \\
-	& = \E\left[ e_{0}(t)^{2}\right] +\E\left[\left(\hat{y}\left(t\mid t-1,\theta _{0}\right) -\hat{y}(t\mid t-1,\theta)\right)^{2}\right] \\
+	& = \E\left[ e_{0}(t)^{2}\right] +\E\left[\left(\hat{y}\left(t\mid t-1,\theta _{0}\right) -\hat{y}(t\mid t-1,\theta)\right)^{2}\right] \cancel{+2\E\left[e(t)\left(\hat{y}\left(t\mid t-1,\theta _{0}\right) -\hat{y}(t\mid t-1,\theta)\right)\right]} \\
 	& = \underbrace{\lambda _{0}^{2}}_{\text{const.}} +\underbrace{\E\left[\left(\hat{y}\left(t\mid t-1,\theta _{0}\right) -\hat{y}(t\mid t-1,\theta)\right)^{2}\right]}_{\geq 0,\ =0\text{ if } \theta =\theta _{0}}
 \end{align*}
 
@@ -34,7 +34,7 @@ So that
 \end{equation*}
 Using \gls{pem} asymptotic theory
 \begin{equation*}
-\text{distance}[\hat{\theta}_{N}(s), \Delta]\xrightarrow{N\to\infty} 0 \quad \text{with }\theta_{0} \in \Delta 
+\hat{\theta}_{N}(s) \xrightarrow{N\to\infty} \Delta \quad \text{with }\theta_{0} \in \Delta 
 \end{equation*}
 If $ \Delta =\left\{\theta _{0}\right\}$ is a singleton (i.e. $ \bar{J}$ has unique minimum) then:
 \[
@@ -47,7 +47,44 @@ If $ \Delta =\left\{\theta _{0}\right\}$ is a singleton (i.e. $ \bar{J}$ has uni
 \]
 Thus, the \gls{pem} identification is \textbf{asymptotically consistent}: if $ \Mc$ is rich enough and the number of collected data is big enough, \gls{pem} identification provides a good description of $ S$.
 
+There are 4 possible scenarios:
+\begin{enumerate}
+    \item [a.] $S\in\Mc(\theta)$ and $\Delta$ is a singleton;
+    \item [b.] $S\in\Mc(\theta)$ but $\Delta$ is not a singleton;
+    \item [c.] $S\notin\Mc(\theta)$ and $\Delta$ is a singleton;
+    \item [d.] $S\notin\Mc(\theta)$ and $\Delta$ is not a singleton.
+\end{enumerate}
 
+\begin{figure}[h]
+\centering
+
+\begin{subfigure}{0.23\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/s1.jpg}
+  \caption{}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.23\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/s2.jpg}
+  \caption{}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.23\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/s3.jpg}
+  \caption{}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.23\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/s4.jpg}
+  \caption{}
+\end{subfigure}
+
+\caption{The 4 possible scenarios}
+\label{fig:quattro_immagini}
+\end{figure}
 
 \section{Model order selection}
 
@@ -63,12 +100,10 @@ The process is not linear: it is common to loop from model validation to another
 
 An important choice for $ \Mc$ is the model order selection. Given an ARMAX model (black-box case):
 \begin{gather*}
-\begin{aligned}
-y(t)  & =\frac{B(z,\theta)}{A(z,\theta)} u(t-d) +\frac{1}{A(z,\theta)} e(t) & e(t) \sim \WN (0,\lambda ^{2})\\
-A(z,\theta)  & =1-a_{1} z^{-1} -\cdots -a_{m} z^{-m} & \\
-B(z,\theta) & =b_{0} +b_{1} z^{-1} +\cdots +b_{p} z^{-p} & \\
-C(z,\theta) & =1+c_{1} z^{-1} +\cdots +c_{n} z^{-n} & 
-\end{aligned}\\
+y(t)=\frac{B(z,\theta)}{A(z,\theta)} u(t-d) +\frac{C(z,\theta)}{A(z,\theta)} e(t) \quad e(t) \sim \WN (0,\lambda ^{2})\\
+A(z,\theta) =1-a_{1} z^{-1} -\cdots -a_{m} z^{-m} \\
+B(z,\theta)=b_{0} +b_{1} z^{-1} +\cdots +b_{p} z^{-p}\\
+C(z,\theta)=1+c_{1} z^{-1} +\cdots +c_{n} z^{-n}
 \end{gather*}
 The model order is: $ (m,p,n)$, the delay $ d$ between $ I/O$ is neglected as it can be easily retrieved from data.
 
@@ -88,7 +123,7 @@ A naive idea is to use $ J_{N}$ as an indicator for model quality, selecting a m
 	$\mathtt{For }\ m=1:\overline{m}$
 	\begin{gather*}
 		\Mc^{m} =\text{ARMAX}(m) =\left\{\Mc(\theta) ,\theta \in \Theta ^{m}\right\}\\
-		\hat{\theta }_{N}^{m} =\underset{\theta \in \Theta ^{m}}{\argmin}\frac{1}{N}\sum _{i=1}^{N}(y(i) -\hat{y}(i\mid i-1,\theta))^{2}
+		\hat{\theta }_{N}^{m} =\underset{\theta \in \Theta ^{m}}{\argmin}J_N(\theta)=\underset{\theta \in \Theta ^{m}}{\argmin}\frac{1}{N}\sum _{i=1}^{N}(y(i) -\hat{y}(i\mid i-1,\theta))^{2}
 	\end{gather*}
 	$\mathtt{END}$
 }
@@ -106,9 +141,36 @@ At the end of the cycle we select:
     \caption{Meaning of underfitting and overfitting.}
 \end{figure}
 \FloatBarrier
+
+There are 3 different criteria fol model order selection:
+\begin{enumerate}
+    \item Whiteness test on residuals or "Anderson's test";
+    \item Cross-validation;
+    \item Identification with model order penalties.
+\end{enumerate}
+
+
+\subsection{Whiteness test on residuals}
+
+We know that, if $S\in\Mc(\theta)$ for a certain $m$, then $\hat\theta_N^m\approx\theta_0$ and the prediction error $\varepsilon(t\mid t-1,\hat\theta_N^m)\approx e(t) \sim \WN(0,\lambda^2)$
+
+The question we ask ourselves and want to answer is: does the prediction error correspond to the realization of a $\WN$? This way of proceeding is called \textbf{Anderson's test}.
+
+We can answer thanks to the time history of $\varepsilon(t\mid t-1,\hat\theta_N^m)$: if the answer is affirmative our predictor is optimal therefore $\hat\theta_N^m\approx\theta_0$, otherwise the order is wrong.
+
+In practice we just need to observe the shape of the graphs of the covariance function or the spectrum, but the problem with this test is that it is necessary to establish a threshold value for which the graph corresponds to white noise and this is debatable.
+
+\fg{0.6}{ideal-vs-real-graph}
+
+In an ideal situation the best candidate is the first model that passes the test, subsequent ones will give an overfitted model, in reality it all depends on the threshold value chosen.
+
+\fg{0.6}{anderson-test}
+
+\subsection{Cross validation}
+
 A very simple but powerful idea to solve the problem is to perform \textbf{cross validation}.
 
-Cross validation consists in evaluating the performance of an identified model on new data: the dataset is divided in two parts, using the first (\textbf{training dataset}) for selecting the parameters and the second (\textbf{validation dataset}) for cross validation.
+Cross validation consists in evaluating the performance of an identified model on new data: the dataset is divided in two parts, using the first (\textbf{training dataset}), with $M$ samples, for selecting the parameters and the second (\textbf{validation dataset}), with $N-M$ samples, for cross validation.
 
 The for-loop becomes:
 
@@ -131,8 +193,13 @@ m^{\star} =\underset{m}{\argmin} J_{V}(\hat{\theta }_{T}^{m}) ,\hat{\theta }_{N}
 The drawback of cross-validation is that the dataset has to be split: less information is used to tune the model and data collection can be expensive.
 
 
-\subsection{Alternative approach: direct model order penalization}
-The structure is similar, we run a cycle up to a maximum model order
+\subsection{Identification cost with order penalization}
+The structure is similar to cross validation, but with the following differences:
+\begin{itemize}
+    \item cross-validation: same costs for training/validation, different data;
+    \item penalized-cost approach: different costs for model order, same data.
+\end{itemize}
+We run a cycle up to a maximum model order:
 
 \boxedText{
 	$\mathtt{For } \ m=1:\overline{m}$
@@ -150,7 +217,7 @@ Then we select
 \begin{equation*}
 m^{\star} =\underset{m}{\argmin} V(m) ,\hat{\theta }_{N} =\hat{\theta }_{T}^{m^{\star}}
 \end{equation*}
-Some common choice are
+Some common choice for $V$ are
 \begin{align*}
 \text{FPE} & =\text{Final Prediction Error} & \text{(probability)}\\
 \text{AIC} & =\text{Akaike's Identification Criterion} & \text{(statistics)}\\
@@ -174,10 +241,31 @@ In fact, FPE and AIC are approximately equivalent:
 \end{align*}
 MDL is equal to AIC with 2 replaced by $ \ln(N)$. Since typically $ \ln(N)  >2$ (i.e. dataset has more than 8 data points) MDL penalizes model order more than AIC and FPE.
 
+\begin{rem}
+    If $S\in\Mc(\theta)$ and $\Mc(\theta)$ is the set of ARX models, MDL is right.
 
-% esercitazione 10
+    In the general case, $S\notin\Mc(\theta)$, we usually prefer to (slightly) overfit and then we use AIC.
+\end{rem}
 
-\section{Estimation of mean, covariance and spectrum}
+\section{Nonparametric Identification}
+
+Is it possible to estimate $m_y, \gamma_y(\omega), \Gamma_y(\omega)$ from data (\emph{directly!}) without first identifying a full model of $W(z)$? Yes!
+
+To understand if we have found a good estimator we will evaluate their correctness and consistency.
+
+\begin{defn}[Correctness]
+    An estimator is correct if the expected value of the estimator is equal to the probabilistic property to be estimated. So for a generic estimator $\hat\beta$ :
+    \[
+    \E[\hat\beta_N]=\beta_y
+    \]
+\end{defn}
+
+\begin{defn}[Consistency]
+    An estimator is consistent if the estimate error variance tends to zero as the number of data grows. So for a generic estimator $\hat\beta$ :
+    \[
+    \E[(\hat\beta_N-\beta_y)^2]\xrightarrow{N\to\infty} 0
+    \]
+\end{defn}
 
 \subsection{Mean}
 
@@ -186,13 +274,12 @@ We use the sample mean:
 	\boxed{\hat{m}_{N}=\frac{1}{N}\sum_{t=1}^{N} y(t)} 
 \]
 \begin{itemize}
-	\item it is \textbf{correct}: $\E[\hat{m}_{N}]=m=\E[y(t)]$;
-	\item if $\gamma _{y}(\tau )\xrightarrow{|\tau|\to\infty} 0$ then it is \textbf{consistent}: $\E[(\hat{m}_{N}-m)^2]\xrightarrow{N\to\infty} 0$.
+	\item it is \textbf{correct}: $\E[\hat{m}_{N}]=m_y=\E[y(t)]$;
+	\item if $\gamma _{y}(\tau )\xrightarrow{|\tau|\to\infty} 0$ then it is \textbf{consistent}: $\E[(\hat{m}_{N}-m_y)^2]\xrightarrow{N\to\infty} 0$.
 \end{itemize}
 
 \subsection{Covariance}
-
-We estimate it through
+For simplicity, we assume $m_y=0$ (without loss of generality). We estimate the covariance through
 \[
 	\boxed{\hat{\gamma}_{y}(\tau) = \frac{1}{N-|\tau|} \sum_{t=1}^{N-|\tau|} y(t)\cdot y(t+|\tau|), \qquad |\tau|\leq N-1}
 \]
@@ -222,14 +309,16 @@ We define two estimators:
 \]
 We cut off the sum because otherwise they are not defined.
 
+Properties of $\hat{\Gamma}_{y}(\omega)$:
+\begin{itemize}
+	\item it is \textbf{not correct}, but it is \textbf{asymptotically correct};
+	\item it is \textbf{not consistent}. To reduce the variance of the estimator error some methods can be used (averaging or regularization).
+\end{itemize}
+
 Why to use $\hat{\Gamma}_{y}'(\omega)$?
 \begin{itemize}
 	\item $\hat{\Gamma}_{y}'(\omega)$ satisfies the positivity condition of the spectrum while $\hat{\Gamma}_{y}(\omega)$ may be negative for some $\omega$;
 	\item we can write it in terms of the Discrete Fourier Transform.
-\end{itemize}
 
-Properties of $\hat{\Gamma}_{y}'(\omega)$:
-\begin{itemize}
-	\item it is \textbf{not correct}, but it is \textbf{asymptotically correct};
-	\item it is \textbf{not consistent}. To reduce the variance of the estimator error some methods can be used (e.g. the Bartlett method).
+    \fg{0.6}{avg}
 \end{itemize}

@@ -25,6 +25,16 @@ For different values of $s$, one gets different realizations of the \gls{sp}.
 
 We will think of available observations ${u(1),u(2),\ldots,u(N)}$ and ${y(1), y(2),\ldots, y(N)}$ as \emph{finite} length realizations.
 
+To fully describe a \gls{sp}, we would need how the probability distribution of $v(t,s)$ varies along the time, but it is too heavy.
+
+In our application, a \emph{wide-sense characterization} of a \gls{sp} is more than sufficient.
+
+\begin{defn}[Wide-sense characterization]
+\[
+\text{Wide-sense characterization}\iff\text{\gls{sp} is described only via the mean and the covariance function.}
+\]
+\end{defn}
+
 \begin{defn}[Mean value]
 	The mean value $m(t)$ is the expected value of the random variable $v(t,s)$ at time $t$:
 	\[
@@ -77,35 +87,24 @@ Why \glspl{ssp}?
 \end{itemize}
 
 \textbf{Properties of the covariance function for a \gls{ssp}.}
-\begin{itemize}
+\begin{enumerate}
 	\item $\gamma(0)=\E[(v(t)-m)^{2}] \geq 0$ (non negative at initial time).
-	\item $|\gamma(\tau)| \leq \gamma(0)$ (bounded), indeed consider the non-negative quantity:
-	\begin{align*}
-		\E[(v(t) \pm v(t-\tau))^2] &= \E[v(t)^2] \pm \E[2v(t-\tau)v(t)]+\E[v(t-\tau)^2]\\
-		&=\E[v(t)^2] \pm 2\gamma(\tau)+\E[v(t)^2]\\
-		&=2\gamma(0) \pm 2\gamma(\tau) \geq 0 
-		\iff -\gamma(0) \leq \gamma(\tau) \leq \gamma(0) \iff |\gamma(\tau)| \leq \gamma(0)
-	\end{align*}
-	\item $\gamma(\tau)=\gamma(-\tau)$ (symmetric), indeed:
-	\begin{align*}
-		\gamma(-\tau)&=\E[(v(t)-m)(v(t-(-\tau))-m)]\\
-		&=\E[(v(t)-m)(v(t+\tau))-m)]\\
-		&=\E[(v(t+\tau)-m)(v(t))-m)]\\
-		&=\gamma(\tau) \quad(t+\tau-t=\tau)
-	\end{align*}
-\end{itemize}
+	\item $|\gamma(\tau)| \leq \gamma(0)$ (bounded).
+	\item $\gamma(\tau)=\gamma(-\tau)$ (symmetric).
+\end{enumerate}
 
 \fg{0.7}{covariance-function}
-
-Given a \gls{ssp} $x(t)$, we will write $m_{x}$ e $\gamma_{x}(\tau)$ for its mean and covariance function
-
-Two \glspl{ssp} $y_{1}(t)$ and $y_{2}(t)$ are wide-sense equivalent if $m_{y_{1}}=m_{y_{2}}$ e $\gamma_{y_{1}}(\tau)=\gamma_{y_{2}}(\tau), \forall \tau$
-
-The \emph{covariance function}
+\newpage
+\textbf{Observations.}
+\begin{itemize}
+    \item Given a \gls{ssp} $x(t)$, we will write $m_{x}$ e $\gamma_{x}(\tau)$ for its mean and covariance function.
+    \item Two \glspl{ssp} $y_{1}(t)$ and $y_{2}(t)$ are wide-sense equivalent if $m_{y_{1}}=m_{y_{2}}$ e $\gamma_{y_{1}}(\tau)=\gamma_{y_{2}}(\tau), \forall \tau$.
+    \item The \emph{covariance function}
 $$
 	\E[(v(t)-m) \cdot(v(t-\tau)-m)]
 $$
-is very \emph{different} from the $2^{\text{nd}}$ order moment function $\E[v(t) \cdot v(t-\tau)]$.
+is very \emph{different} from the $2^{\text{nd}}$ order moment function or \emph{correlation function} $\E[v(t) \cdot v(t-\tau)]$.
+\end{itemize}
 
 \begin{exa}
 $\boxed{v(t,s)=\alpha (s)}$, where $\alpha (s)\sim \mathcal{N}(1,3)$.
@@ -131,7 +130,7 @@ $\boxed{v(t, s)=t \cdot \alpha(s)-t}$, where $\alpha(s) \sim \mathcal{N}(1,3)$.
 		\gamma_{v}(t, t-\tau)&=\E[(v(t, s)-m_{v}(t))(v(t-\tau, s)-m_{v}(t-\tau))]\\
 	&=\E[(t \cdot \alpha(s)-t)((t-\tau) \cdot \alpha(s)-(t-\tau))]\\
 	&=\E[t(t-\tau)(\alpha(s)-1)^{2}]\\
-	&=t(t-\tau) \cdot \E[(\alpha(s)-1)^{2}]=t \cdot(t-\tau) \cdot 4
+	&=t(t-\tau) \cdot \E[(\alpha(s)-1)^{2}]=t \cdot(t-\tau) \cdot 3
 	\end{aligned}$\\
 	\emph{does} depend on $t$.\\
 	Then the process is not stationary.

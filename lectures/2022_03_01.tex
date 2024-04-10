@@ -83,10 +83,8 @@ Given $u(t)$ \gls{sp}, consider
 
 \section{Poles and zeros}
 
-\begin{rem}
-	One can always multiply a transfer function by $z^{m}/z^{m}$.
 
-	Consider a complex-valued transfer function $W(z)=C(z)/A(z)$. Then one can identify:
+	Consider a complex-valued transfer function $W(z)=\frac{C(z)}{A(z)}$. Then one can identify:
 	\begin{itemize}
 		\item \textbf{zeros}: all $z\in \mathbb{C}$ such that $W(z)=0$.
 		\item \textbf{poles}: all $z\in \mathbb{C}$ such that $W^{-1} (z)=0$.
@@ -95,7 +93,11 @@ Given $u(t)$ \gls{sp}, consider
 	\[
 		\text{zeros}=\{z:C(z)=0\} \qquad \text{poles}=\{z:A(z)=0\}
 	\]
+
+ \begin{rem}
+	One can always multiply a transfer function by $z^{m}/z^{m}$.
 \end{rem}
+
 \begin{exa}
 \begin{align*}
 y(t) &=e(t)+\frac{1}{2} e(t-1)+\frac{1}{4} e(t-2) =\left(1+\frac{1}{2} z^{-1}+\frac{1}{4} z^{-2}\right) e(t) \\
